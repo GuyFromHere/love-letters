@@ -1,0 +1,31 @@
+{
+	"name": "love-letters",
+	"version": "1.0.0",
+	"description": "Location based message and image sharing app",
+	"main": "server.js",
+	"dependencies": {
+		"aws-sdk": "^2.664.0",
+		"axios": "^0.19.2",
+		"concurrently": "^5.2.0",
+		"config": "^3.3.1",
+		"express": "^4.17.1",
+		"mongoose": "^5.9.10"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+		"start:prod": "node server.js",
+		"start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+		"client": "cd client && npm run start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/GuyFromHere/love-letters.git"
+	},
+	"author": "Dan Dismuke",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/GuyFromHere/love-letters/issues"
+	},
+	"homepage": "https://github.com/GuyFromHere/love-letters#readme"
+}

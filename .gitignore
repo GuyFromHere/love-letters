@@ -1,3 +1,7 @@
+# ignore local api variables
+/config/default.json
+config/default.json
+
 # Logs
 logs
 *.log
