@@ -1,5 +1,4 @@
 import React from "react";
-import imgSrc from "../../../images/bitlocker1.png";
 
 const handleCapture = () => {
 	console.log("you clicked save");
@@ -14,7 +13,13 @@ export default function CaptureImg(props) {
 				alt="Test"
 			></img>
 			<br></br>
-			<input type="submit" onClick={handleCapture()} value="Save"></input>
+			<input
+				type="submit"
+				onClick={() => {
+					handleCapture();
+				}}
+				value="Save"
+			></input>
 		</div>
 	);
 }

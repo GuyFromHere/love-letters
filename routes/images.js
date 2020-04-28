@@ -19,12 +19,13 @@ const s3 = new AWS.S3({
 });
 
 const uploadFile = (imageFile, filename) => {
-	const fileContent = fs.readFileSync(imageFile);
-	// Setting up S3 upload parameters
+	const fileContent = new Buffer.from(imageFile, "base64");
 	const params = {
 		Bucket: BUCKET,
 		Key: filename, // File name you want to save as in S3
 		Body: fileContent,
+		ContentEncoding: "base64",
+		ContentType: "image/png",
 	};
 	// Uploading files to the bucket
 	s3.upload(params, function (err, data) {
@@ -40,12 +41,8 @@ const uploadFile = (imageFile, filename) => {
 // @access  Private
 // router.post("/save", auth, (req, res) => {
 router.post("/save", (req, res) => {
-	const newFileName = req.body.captureInfo.captureName;
-	// save image to root of the application
-	fs.writeFile(newFileName, req.body.imageData, { encoding: "base64" }, function (err, fileData) {
-		// Upload file to bucket
-		uploadFile(newFileName, newFileName);
-	});
+	// Upload base64 image directly to AWS...
+	uploadFile(req.body.imageData, req.body.captureInfo.captureName);
 });
 
 module.exports = router;

@@ -9,7 +9,6 @@ class WebcamCapture extends React.Component {
 		// set name of capture file for upload
 		this.state = {
 			captureName: "",
-			captureData: "",
 			key: 0,
 		};
 	}
@@ -19,17 +18,15 @@ class WebcamCapture extends React.Component {
 	};
 
 	capture = () => {
-		//console.log("Capture.js capture imageSrc:");
+		console.log("you clicked capture");
 		// Get capture from webcam
-		const imageData = this.webcam.getScreenshot();
+		const imageSrc = this.webcam.getScreenshot();
+		// Set capture name for upload
 		this.setState({
-			captureData: imageData,
 			captureName: this.state.key + "_image.png",
 		});
-		// Set capture name for upload
-		this.setState({});
 		// Perform upload...sending all state variables in case I want to send extra info in the route
-		API.saveImage(imageData, this.state);
+		API.saveImage(imageSrc, this.state);
 		// Iterate key value for next image.
 		this.setState({
 			key: this.state.key + 1,
