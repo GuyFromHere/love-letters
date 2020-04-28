@@ -1,17 +1,15 @@
 import React from "react";
 import Webcam from "react-webcam";
 import CaptureImg from "../../partials/CaptureImg";
-//import API from "../../utils/api";
+import API from "../../../utils/api.js";
 
 class WebcamCapture extends React.Component {
 	constructor() {
 		super();
 		// set name of capture file for upload
 		this.state = {
-			id: "",
 			captureName: "",
 			key: 0,
-			ocrResults: [],
 		};
 	}
 
@@ -20,12 +18,19 @@ class WebcamCapture extends React.Component {
 	};
 
 	capture = () => {
+		console.log("you clicked capture");
+		// Get capture from webcam
 		const imageSrc = this.webcam.getScreenshot();
+		// Set capture name for upload
 		this.setState({
-			captureName: this.state.id + "_image.png",
+			captureName: this.state.key + "_image.png",
+		});
+		// Perform upload...sending all state variables in case I want to send extra info in the route
+		API.saveImage(imageSrc, this.state);
+		// Iterate key value for next image.
+		this.setState({
 			key: this.state.key + 1,
 		});
-		//API.saveImage(imageSrc, this.state);
 	};
 
 	render() {
@@ -52,12 +57,9 @@ class WebcamCapture extends React.Component {
 						screenshotFormat="image/png"
 						videoConstraints={videoConstraints}
 					/>
-					<input type="submit" onClick={this.capture}></input>
-					<CaptureImg
-						key={this.state.key}
-						captureName={this.state.captureName}
-						ocr={this.ocr}
-					/>
+					<br></br>
+					<input type="submit" onClick={this.capture} value="Capture"></input>
+					<CaptureImg captureName={this.state.captureName} />
 				</div>
 			</div>
 		);
