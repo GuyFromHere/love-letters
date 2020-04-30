@@ -1,25 +1,12 @@
 import React from "react";
-
-const handleCapture = () => {
-	console.log("you clicked save");
-};
+import "./style.css";
 
 export default function CaptureImg(props) {
 	return (
 		<div className="captureContainer">
-			<img
-				className="capture"
-				src="https://media.tmicdn.com/catalog/product/cache/393572b8c1f13fa8b2ac03b51a17cd45/g/l/glitterunicorn_2_.jpg"
-				alt="Test"
-			></img>
-			<br></br>
-			<input
-				type="submit"
-				onClick={() => {
-					handleCapture();
-				}}
-				value="Save"
-			></input>
+			<img className="capturedImage" src={props.src} alt="Captured image"></img>
+			<i class="fas fa-cloud-upload-alt fa-3x" id="uploadBtn" onClick={props.upload}></i>
+			<i class="fas fa-ban fa-3x" id="resetBtn" onClick={props.reset}></i>
 		</div>
 	);
 }

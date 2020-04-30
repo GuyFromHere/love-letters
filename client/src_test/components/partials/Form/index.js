@@ -18,14 +18,6 @@ export function TextArea(props) {
 	);
 }
 
-export function Label(props) {
-	return (
-		<div className="form-group">
-			<label className="form-control" {...props} />
-		</div>
-	);
-}
-
 export function FormBtn(props) {
 	return <button {...props}> {props.children}</button>;
 }

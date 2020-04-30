@@ -1,0 +1,33 @@
+.captureContainer {
+	position: relative;
+	text-align: center;
+}
+
+.capturedImg {
+	position: relative;
+	padding: 1rem;
+	width: 1280px;
+	height: 720px;
+}
+
+#resetBtn {
+	position: absolute;
+	left: 50%;
+	top: 80%;
+	transform: translate(-50%, -50%);
+}
+
+#uploadBtn {
+	position: absolute;
+	left: 45%;
+	top: 80%;
+	transform: translate(-50%, -50%);
+}
+
+.fa-cloud-upload-alt {
+	color: skyblue;
+}
+
+.fa-ban {
+	color: red;
+}

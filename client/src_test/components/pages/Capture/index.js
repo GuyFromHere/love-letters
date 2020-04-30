@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import Webcam from "react-webcam";
-import CaptureImg from "../../partials/CaptureImg";
+import Image from "../../partials/Image";
 import API from "../../../utils/api.js";
-import "./style.css";
 
 const getUniqueKey = () => {
 	const keyOffset = new Date();
@@ -10,7 +9,7 @@ const getUniqueKey = () => {
 	return rand;
 };
 
-class Capture extends Component {
+class WebcamCapture extends React.Component {
 	constructor() {
 		super();
 		const urlRoot = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/publicprefix/";
@@ -38,7 +37,6 @@ class Capture extends Component {
 	upload = () => {
 		// Perform upload...sending all state variables in case I want to send extra info in the route
 		API.saveImage(this.state.capture, this.state.key);
-		this.setState({ key: getUniqueKey(), capture: "" });
 	};
 
 	render() {
@@ -59,11 +57,7 @@ class Capture extends Component {
 				<div className="webcamContainer" style={divStyle}>
 					{this.state.key ? <h1>{this.state.key}</h1> : <h1>key here</h1>}
 					{this.state.capture ? (
-						<CaptureImg
-							src={this.state.capture}
-							reset={this.reset}
-							upload={this.upload}
-						/>
+						<Image src={this.state.capture} />
 					) : (
 						<Webcam
 							className="webcam"
@@ -76,10 +70,12 @@ class Capture extends Component {
 					)}
 					<br></br>
 					<input type="submit" onClick={this.capture} value="Capture"></input>
+					<input type="submit" onClick={this.reset} value="Reset"></input>
+					<input type="submit" onClick={this.upload} value="Upload"></input>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Capture;
+export default WebcamCapture;
