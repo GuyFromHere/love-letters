@@ -7,19 +7,13 @@ export default {
 		let base64Image = imageData.split(";base64,").pop();
 
 		// Send to server as string and convert it to an image
-		axios
-			.post("/api/images/save", { imageData: base64Image, captureInfo: captureInfo })
-/* 			.then((result) => {
-				// send image info back to browser
-				console.log("api saveImage result");
-				console.log(result);
-			}); */
+		axios.post("/api/images/save", { imageData: base64Image, captureInfo: captureInfo });
 	},
 	saveImageTest: function () {
-		console.log('api saveimagetest');
+		console.log("api saveimagetest");
 	},
 	getImage: function (key) {
-		console.log('api getImage');
-		axios.get("/api/images/get/" + key)
-	}
+		console.log("api getImage");
+		axios.get("/api/images/get/" + key);
+	},
 };

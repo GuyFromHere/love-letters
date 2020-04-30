@@ -1,16 +1,22 @@
 import React from "react";
 import Webcam from "react-webcam";
-import CaptureImg from "../../partials/CaptureImg";
 import API from "../../../utils/api.js";
+
+const getUniqueKey = () => {
+	const keyOffset = new Date();
+	const rand = Math.floor(Math.random() * keyOffset);
+	console.log(rand);
+	return rand;
+};
 
 class WebcamCapture extends React.Component {
 	constructor() {
 		super();
-		// set name of capture file for upload
+		const urlRoot = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/publicprefix/";
+		// Initialize state and set key
 		this.state = {
 			captureName: "",
-			captureData: "",
-			key: 0,
+			key: "",
 		};
 	}
 
@@ -22,19 +28,25 @@ class WebcamCapture extends React.Component {
 		//console.log("Capture.js capture imageSrc:");
 		// Get capture from webcam
 		const imageData = this.webcam.getScreenshot();
-		this.setState({
-			captureData: imageData,
-			captureName: this.state.key + "_image.png",
-		});
+
 		// Set capture name for upload
 		this.setState({});
 		// Perform upload...sending all state variables in case I want to send extra info in the route
 		API.saveImage(imageData, this.state);
-		// Iterate key value for next image.
+
+		// Get new key value for next image.
 		this.setState({
-			key: this.state.key + 1,
+			key: getUniqueKey(),
+			captureName: this.state.key + "_image.png",
 		});
 	};
+
+	componentDidMount() {
+		this.setState({
+			key: getUniqueKey(),
+			captureName: this.state.key + "_image.png",
+		});
+	}
 
 	render() {
 		const videoConstraints = {
@@ -52,6 +64,7 @@ class WebcamCapture extends React.Component {
 		return (
 			<div className="container">
 				<div className="webcamContainer" style={divStyle}>
+					<h1>{this.state.captureName}</h1>
 					<Webcam
 						className="webcam"
 						audio={false}
@@ -62,7 +75,7 @@ class WebcamCapture extends React.Component {
 					/>
 					<br></br>
 					<input type="submit" onClick={this.capture} value="Capture"></input>
-					<CaptureImg captureName={this.state.captureName} />
+					<img src={this.urlRoot + this.state.captureName} alt="TEST"></img>
 				</div>
 			</div>
 		);
