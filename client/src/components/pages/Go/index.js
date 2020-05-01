@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
-import Image from "../../partials/Image";
+import Map from "../../partials/Map";
 import { Input, Label, FormBtn } from "../../partials/Form";
 import API from "../../../utils/api";
 
 export default function Go() {
-	const [location, setLocation] = useState({});
+	const [formObject, setFormObject] = useState();
+	const [location, setLocation] = useState();
 
-	const handleFormSubmit = (event) => {
-		console.log("go handleFormSubmit");
-		event.preventDefault();
+	const onKeyDown = (e) => {
+		if (e.key === "Enter") {
+			handleSubmit();
+		} else {
+			setFormObject(e.target.value);
+		}
 	};
 
 	const handleClick = () => {
-		console.log("Go handleClick");
+		handleSubmit();
 	};
 
-	useEffect(() => {
-		console.log("go useEffect");
-	}, []);
+	const handleSubmit = () => {
+		API.getLocation(formObject).then((result) => {
+			setLocation(result.data.uri);
+		});
+		document.getElementById("locationInput").value = "";
+	};
 
 	return (
 		<div className="container">
 			<h1>Where do you want to go?</h1>
 			<Label value="Enter a zip code:" />
-			<Input />
+			<Input id="locationInput" onKeyDown={(e) => onKeyDown(e)} />
 			<FormBtn
 				value="Click"
 				onClick={() => {
@@ -32,6 +39,7 @@ export default function Go() {
 			>
 				Click
 			</FormBtn>
+			{location ? <Map location={location} /> : null}
 		</div>
 	);
 }

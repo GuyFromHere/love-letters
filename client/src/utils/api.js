@@ -9,11 +9,8 @@ export default {
 		// Send to server as string and convert it to an image
 		axios.post("/api/images/save", { imageData: base64Image, captureInfo: captureInfo });
 	},
-	saveImageTest: function () {
-		console.log("api saveimagetest");
-	},
-	getImage: function (key) {
-		console.log("api getImage");
-		axios.get("/api/images/get/" + key);
+	// Get  URI for a static Google map of the specified location
+	getLocation: function (location) {
+		return axios.get("/api/letters/map/" + location);
 	},
 };
