@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const config = require("config");
 
-const MAP = process.env.MAP || config.get("MAPS");
+const MAP = process.env.MAPS || config.get("MAPS");
 
 // @route   GET /api/letters/map/:location
 // @desc    Get map from Google API

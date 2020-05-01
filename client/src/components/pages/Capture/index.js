@@ -13,7 +13,6 @@ const getUniqueKey = () => {
 class Capture extends Component {
 	constructor() {
 		super();
-		const urlRoot = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/publicprefix/";
 		// initialize empty state variable
 		this.state = { key: getUniqueKey() };
 	}
