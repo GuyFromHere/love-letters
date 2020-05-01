@@ -9,12 +9,9 @@ const port = process.env.PORT || 3001;
 // Body Parser middleware
 app.use(express.json({ limit: "5mb" }));
 
-// DB config
-const db = config.get("mongoURI");
-
 // connect to DB
 mongoose
-	.connect(process.env.MONGODB_URI || db, {
+	.connect(process.env.MONGODB_URI || config.get("mongoURI"), {
 		useNewUrlParser: true,
 		useCreateIndex: true,
 		useUnifiedTopology: true,
