@@ -29,7 +29,7 @@ export default function Go() {
 	return (
 		<div className="container">
 			<h1>Where do you want to go?</h1>
-			<Label value="Enter a zip code:" />
+			<Label />
 			<Input id="locationInput" onKeyDown={(e) => onKeyDown(e)} />
 			<FormBtn
 				value="Click"
