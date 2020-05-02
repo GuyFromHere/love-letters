@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
+import LetterForm from '../LetterForm';
 
 export default function Leave() {
+
+	const [location, setLocation] = useState();
 
 	const getLocation = (choice) => {
 		console.log('leave getLocation')
@@ -11,7 +14,7 @@ export default function Leave() {
 				// TEST
 				// feed to maps api like
 				// uriStart + latitude + ',' + longitude + uriEnd + MAPS)
-
+				setLocation(latitude + "," + longitude);
 			})
 		}
 		
@@ -23,6 +26,7 @@ export default function Leave() {
 			<h1>Where would you like to leave a letter?</h1>
 			<button onClick={() => {getLocation('here')}}>Current Location</button>
 			<button onClick={() => {getLocation('there')}}>Somewhere Else</button>
+			{location ? <LetterForm location={location} /> : null}
 		</div>
 	)
 }
