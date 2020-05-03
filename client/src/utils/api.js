@@ -13,4 +13,8 @@ export default {
 	getLocation: function (location) {
 		return axios.get("/api/letters/map/" + location);
 	},
+	// Send text letter
+	sendLetter: function ( location, letterText ) {
+		return axios.post("/api/letters/leave", {location: location, letter: letterText, type: "text"})
+	}
 };

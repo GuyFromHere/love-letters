@@ -6,12 +6,17 @@ const LetterSchema = new Schema({
 		type: String,
 		required: false,
 	},
+	location: {
+		type: String,
+		required: true
+	},
+	text: {
+		type: String,
+		required: false
+	},
 	type: {
 		type: String,
 		required: true,
-	},
-	location: {
-		type: String,
 	},
 });
 

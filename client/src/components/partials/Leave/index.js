@@ -8,13 +8,15 @@ export default function Leave() {
 	const getLocation = (choice) => {
 		console.log('leave getLocation')
 		if ( choice === 'here' ) {
+			console.log('this is not broken1');
 			navigator.geolocation.getCurrentPosition(function(position) {
+				console.log('this is not broken2')
 				const latitude = position.coords.latitude;
 				const longitude = position.coords.longitude;
 				// TEST
 				// feed to maps api like
-				// uriStart + latitude + ',' + longitude + uriEnd + MAPS)
 				setLocation(latitude + "," + longitude);
+				// uriStart + latitude + ',' + longitude + uriEnd + MAPS)
 			})
 		}
 		
