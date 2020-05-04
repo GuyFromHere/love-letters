@@ -10,8 +10,6 @@ export default function Go() {
 	const onKeyDown = (e) => {
 		if (e.key === "Enter") {
 			handleSubmit();
-		} else {
-			setFormObject(e.target.value);
 		}
 	};
 
@@ -20,7 +18,7 @@ export default function Go() {
 	};
 
 	const handleSubmit = () => {
-		API.getLocation(formObject).then((result) => {
+		API.getLocation(document.getElementById("locationInput").value).then((result) => {
 			setLocation(result.data.uri);
 		});
 		document.getElementById("locationInput").value = "";
@@ -29,12 +27,11 @@ export default function Go() {
 	return (
 		<div className="container">
 			<h1>Where do you want to go?</h1>
-			<Label />
 			<Input id="locationInput" onKeyDown={(e) => onKeyDown(e)} />
 			<FormBtn
 				value="Click"
 				onClick={() => {
-					handleClick();
+					handleSubmit();
 				}}
 			>
 				Click

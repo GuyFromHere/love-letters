@@ -4,16 +4,27 @@ const router = express.Router();
 const config = require("config");
 const Letter = require("../models/Letter");
 
+// Maps api variables
+const uriStart = "https://maps.googleapis.com/maps/api/";
+const uriKeyPrefix = "&key=";
+const staticMapArgs = "staticmap?zoom=14&size=400x400&center=";
+const geoCodeArgs = "geocode/json?sensor=false&components=postal_code:";
 
-const MAP = process.env.MAPS || config.get("MAPS");
+
+const MAPS = process.env.MAPS || config.get("MAPS");
 
 // @route   GET /api/letters/map/:location
 // @desc    Get map from Google API
 // @access  Public
 router.get("/map/:location", (req, res) => {
-	const uriStart = "https://maps.googleapis.com/maps/api/staticmap?center=";
-	const uriEnd = "&zoom=14&size=400x400&key=";
-	res.json({ uri: uriStart + req.params.location + uriEnd + MAP });
+	// test geocode: Zip -> Coordinates
+	// get lat and longitude from Zip 
+	axios.get(uriStart + geoCodeArgs + req.params.location + uriKeyPrefix + MAPS).then(results => {
+		console.log('geouri results')
+		console.log(results.data.results[0].geometry.location)
+	}).catch(err => { console.log(err) })          
+	res.json({ uri: uriStart + staticMapArgs  + req.params.location + uriKeyPrefix + MAPS });
+
 });
 
 // @route   POST /api/letters/leave/
