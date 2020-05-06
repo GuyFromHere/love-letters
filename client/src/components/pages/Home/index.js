@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from "react";
-import API from '../../../utils/api';
-import './style.css';
+import React, { useState, useEffect, createRef } from "react";
+import API from "../../../utils/api";
+import "./style.css";
 
 export default function Home() {
-	const [map, setMap] = useState();
+	const googleMapRef = React.createRef();
 
-	useEffect(() => {	
+	useEffect(() => {
 		// Set default map to current location
-		navigator.geolocation.getCurrentPosition(function(position) {
+		navigator.geolocation.getCurrentPosition(function (position) {
 			const latitude = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			API.getEmbed(latitude + ',' + longitude).then(result => {
-				setMap({uri: result.data.uri})
-			});
-		})
+			createGoogleMap(latitude, longitude);
+		});
+	}, []);
 
-	},[])
+	const createGoogleMap = (lat, lng) => {
+		new window.google.maps.Map(googleMapRef.current, {
+			zoom: 16,
+			center: {
+				lat: lat,
+				lng: lng,
+			},
+			disableDefaultUI: true,
+		});
+	};
 
-	return (
-		<div className="container">
-			{map ? (<iframe
-					src={map.uri} allowFullScreen></iframe>)
-				: null}
-			
-		</div>
-		);
+	return <div id="google-map" ref={googleMapRef} />;
 }

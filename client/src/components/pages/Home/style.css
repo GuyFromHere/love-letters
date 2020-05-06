@@ -5,19 +5,17 @@
 .selectLetter {
 	padding: 2rem;
 	margin: 1rem auto;
-	
+
 	border: 1px solid pink;
 	border-radius: 10px;
 	background-color: rgb(199, 19, 19);
 	color: white;
 	height: 20vh;
 	width: 80vw;
-	
 }
 
 .selectLetter:hover {
 	background-color: rgb(238, 9, 150);
-
 }
 
 .titleBtn {
@@ -25,8 +23,9 @@
 	line-height: 1.5;
 }
 
-iframe {
-	height: 80vh;
+#google-map {
+	height: 81vh;
 	width: 98vw;
+	margin: 1vw auto;
 	overflow: hidden;
 }
