@@ -24,3 +24,9 @@
 	font-size: 56pt;
 	line-height: 1.5;
 }
+
+iframe {
+	height: 80vh;
+	width: 98vw;
+	overflow: hidden;
+}

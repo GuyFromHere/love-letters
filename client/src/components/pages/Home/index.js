@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import Leave from "../../partials/Leave";
-import Read from "../../partials/Read";
-import SelectLetter from "../../partials/SelectLetter";
+import React, { useState, useEffect } from "react";
+import API from '../../../utils/api';
 import './style.css';
 
 export default function Home() {
-	const [choice, setChoice] = useState();
+	const [map, setMap] = useState();
 
-	const handleClick = (choice) => {
-		console.log('home handleClick')
-		console.log(choice)
-		setChoice(choice);
-	}
+	useEffect(() => {	
+		// Set default map to current location
+		navigator.geolocation.getCurrentPosition(function(position) {
+			const latitude = position.coords.latitude;
+			const longitude = position.coords.longitude;
+			API.getEmbed(latitude + ',' + longitude).then(result => {
+				setMap({uri: result.data.uri})
+			});
+		})
+
+	},[])
 
 	return (
 		<div className="container">
-			{ choice === "leave" ? <Leave /> :
-			choice === "read" ? <Read /> :
-			(<div>
-				<SelectLetter handleClick={() => {handleClick("leave")}} text="Leave a letter."/>
-				<SelectLetter handleClick={() => {handleClick("read")}} text="Read a letter."/>
-			</div>)
-			}
+			{map ? (<iframe
+					src={map.uri} allowFullScreen></iframe>)
+				: null}
+			
 		</div>
 		);
 }

@@ -16,5 +16,9 @@ export default {
 	// Send text letter
 	sendLetter: function ( location, letterText ) {
 		return axios.post("/api/letters/leave", {location: location, letter: letterText, type: "text"})
+	},
+	// get Embedded map
+	getEmbed: function ( location ) {
+		return axios.post("/api/letters/location", {location: location});
 	}
 };

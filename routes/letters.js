@@ -9,6 +9,7 @@ const uriStart = "https://maps.googleapis.com/maps/api/";
 const uriKeyPrefix = "&key=";
 const staticMapArgs = "staticmap?zoom=14&size=400x400&center=";
 const geoCodeArgs = "geocode/json?sensor=false&components=postal_code:";
+const embedStart = "https://www.google.com/maps/embed/v1/place?q=";
 
 
 const MAPS = process.env.MAPS || config.get("MAPS");
@@ -17,12 +18,14 @@ const MAPS = process.env.MAPS || config.get("MAPS");
 // @desc    Get map from Google API
 // @access  Public
 router.get("/map/:location", (req, res) => {
-	// test geocode: Zip -> Coordinates
-	// get lat and longitude from Zip 
+	// TEST geocode api: 
+	// Accepts zip code as request param, converts to lat and lon and prints to console
+	//  
 	axios.get(uriStart + geoCodeArgs + req.params.location + uriKeyPrefix + MAPS).then(results => {
 		console.log('geouri results')
 		console.log(results.data.results[0].geometry.location)
 	}).catch(err => { console.log(err) })          
+	// return Google static map of the specified zip code
 	res.json({ uri: uriStart + staticMapArgs  + req.params.location + uriKeyPrefix + MAPS });
 
 });
@@ -48,6 +51,12 @@ router.post("/leave", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+// @route   GET /api/letters/location/
+// @desc    Returns google embed URI for the given location
+// @access  Public
+router.post("/location", (req, res) => {
+		res.json({uri: embedStart + req.body.location + uriKeyPrefix + MAPS});
+});
 
 
 module.exports = router;
