@@ -29,3 +29,8 @@
 	margin: 1vw auto;
 	overflow: hidden;
 }
+
+.marker {
+	width: 40px;
+	height: 40px;
+}
