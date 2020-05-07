@@ -14,12 +14,8 @@ export default {
 		return axios.get("/api/letters/map/" + location);
 	},
 	// Send text letter
-	sendLetter: function (location, letterText) {
-		return axios.post("/api/letters/leave", {
-			location: location,
-			letter: letterText,
-			type: "text",
-		});
+	sendLetter: function (letter) {
+		return axios.post("/api/letters/leave", letter);
 	},
 	// get Embedded map
 	getEmbed: function (location) {

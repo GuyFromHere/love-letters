@@ -8,7 +8,7 @@ import "./style.css";
 // 	When a marker is added, post it to the DB then reload the page centered on the current location.
 
 export default function Home() {
-	//const [coordinates, setCoordinates] = useState({});
+	const [coordinates, setCoordinates] = useState({});
 	const googleMapRef = React.createRef();
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ export default function Home() {
 		// Set default map to current location
 		navigator.geolocation.getCurrentPosition(function (position) {
 			createGoogleMap(position.coords.latitude, position.coords.longitude);
-			//setCoordinates({ lat: position.coords.latitude, lng: position.coords.longitude });
+			setCoordinates({ lat: position.coords.latitude, lng: position.coords.longitude });
 		});
 	};
 
@@ -31,9 +31,6 @@ export default function Home() {
 			url: markerUri + marker.type + ".png",
 			scaledSize: new window.google.maps.Size(40, 30),
 		};
-
-		console.log("home drawMarker");
-		console.log(marker.location);
 		const newMarker = new window.google.maps.Marker({
 			position: new window.google.maps.LatLng(marker.lat, marker.lng),
 			icon: icon,
@@ -41,54 +38,66 @@ export default function Home() {
 		});
 	};
 
+	const addMarker = (location) => {
+		
+		let locationString = location.toString().replace(")","").replace("(","").split(", ");;
+		const newObj = {
+			type: "letter",
+			text: "This is a test.",
+			lat: locationString[0],
+			lng: locationString[1],
+		}
+		API.sendLetter(newObj).then(result => {
+			console.log('letter sent. reload map.');
+			console.log(locationString[0])
+			console.log(locationString[1])
+			createGoogleMap(45.434928402922765, -122.64173556347656);
+			//loadCurrentLocation();
+		})
+	}
+
 	const createGoogleMap = (lat, lng) => {
+
+		// Take a look at this:
+		// https://www.newline.co/fullstack-react/articles/how-to-write-a-google-maps-react-component/#
 		const map = new window.google.maps.Map(googleMapRef.current, {
 			zoom: 16,
 			center: { lat: lat, lng: lng },
 			disableDefaultUI: true,
 		});
 
-		// TEST - location by Mike's Drive In
-		// (45.447707652248454, -122.63189489426377)
-		const test = {
-			type: "letter",
-			text: "This is a test!",
-			lat: 45.447707652248454,
-			lng: -122.63189489426377,
-		};
-		drawMarker(test, map);
+		map.addListener("click", function (mapsMouseEvent) {
+			// call addMarker to handle event
+			addMarker(mapsMouseEvent.latLng)
+		});
 
-		/* API.getMarkers().then((result) => {
+		API.getMarkers().then((result) => {
+			console.log('home getMarkers')
 			result.data.forEach((item) => {
+				console.log('home getMarkers result data')
 				drawMarker(item, map);
 			});
-		}); */
-
-		let infoWindow = new window.google.maps.InfoWindow();
-
-		map.addListener("click", function (mapsMouseEvent) {
-			// TEST
-			// Create a new InfoWindow.
-
-			infoWindow.close();
-			infoWindow = new window.google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
-			infoWindow.setContent(mapsMouseEvent.latLng.toString());
-			infoWindow.open(map);
-
-			//API.addMarker();
-			// TEST
-			// Add marker
-			const markerUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/";
-			const icon = {
-				url: markerUri + "letter.png",
-				scaledSize: new window.google.maps.Size(40, 30),
-			};
-			const marker = new window.google.maps.Marker({
-				position: mapsMouseEvent.latLng,
-				icon: icon,
-				map: map,
-			});
 		});
+		
+		
+		/* API.getMarkers().then((result) => {
+			const map = new window.google.maps.Map(googleMapRef.current, {
+				zoom: 16,
+				center: { lat: lat, lng: lng },
+				disableDefaultUI: true,
+			});
+	
+			map.addListener("click", function (mapsMouseEvent) {
+				// call addMarker to handle event
+				addMarker(mapsMouseEvent.latLng)
+
+			});
+
+			result.data.forEach((item) => {
+				console.log('home getMarkers result data')
+				drawMarker(item, map);
+			});
+		}); */ 
 	};
 
 	return <div id="google-map" ref={googleMapRef} />;

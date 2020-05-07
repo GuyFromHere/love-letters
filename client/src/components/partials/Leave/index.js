@@ -15,7 +15,7 @@ export default function Leave() {
 				const longitude = position.coords.longitude;
 				// TEST
 				// feed to maps api like
-				setLocation(latitude + "," + longitude);
+				setLocation({lat: latitude, lng: longitude);
 				// uriStart + latitude + ',' + longitude + uriEnd + MAPS)
 			})
 		}

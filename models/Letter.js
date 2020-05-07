@@ -6,7 +6,11 @@ const LetterSchema = new Schema({
 		type: String,
 		required: false,
 	},
-	location: {
+	lat: {
+		type: String,
+		required: true
+	},
+	lng: {
 		type: String,
 		required: true
 	},

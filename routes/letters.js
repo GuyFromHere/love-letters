@@ -41,10 +41,11 @@ router.post("/leave", (req, res) => {
 	// Check letter type (image vs. text)
 	// Upload and save URL if it's an image...
 	const newObj = {
-		location: req.body.location,
+		lat: req.body.lat,
+		lng: req.body.lng
 	};
-	if (req.body.type === "text") {
-		newObj.text = req.body.letter;
+	if (req.body.type === "letter") {
+		newObj.text = req.body.text;
 		newObj.type = req.body.type;
 	}
 	Letter.create(newObj)
