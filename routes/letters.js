@@ -40,7 +40,6 @@ router.get("/map/:location", (req, res) => {
 router.post("/leave", (req, res) => {
 	// Check letter type (image vs. text)
 	// Upload and save URL if it's an image...
-
 	const newObj = {
 		location: req.body.location,
 	};
@@ -60,6 +59,16 @@ router.post("/leave", (req, res) => {
 // @access  Public
 router.post("/location", (req, res) => {
 	res.json({ uri: embedStart + req.body.location + uriKeyPrefix + MAPS_CLIENT });
+});
+
+// @route   GET /api/letters/get/
+// @desc    Returns letters so they can be drawn on the map
+// @access  Public
+router.get("/get", (req, res) => {
+	Letter.find().then((results) => {
+		res.json(results);
+		//res.json({ uri: embedStart + req.body.location + uriKeyPrefix + MAPS_CLIENT });
+	});
 });
 
 module.exports = router;

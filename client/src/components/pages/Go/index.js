@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import Map from "../../partials/Map";
-import { Input, Label, FormBtn } from "../../partials/Form";
+import { Input, FormBtn } from "../../partials/Form";
 import API from "../../../utils/api";
 
 export default function Go() {
-	const [formObject, setFormObject] = useState();
 	const [location, setLocation] = useState();
 
 	const onKeyDown = (e) => {
 		if (e.key === "Enter") {
 			handleSubmit();
 		}
-	};
-
-	const handleClick = () => {
-		handleSubmit();
 	};
 
 	const handleSubmit = () => {

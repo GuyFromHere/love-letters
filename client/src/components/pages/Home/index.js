@@ -1,7 +1,6 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../../../utils/api";
 import "./style.css";
-import LetterMarker from "../../../images/markers/letter.png";
 
 //	TODO:
 //	Store marker types and coordinates in DB
@@ -9,7 +8,7 @@ import LetterMarker from "../../../images/markers/letter.png";
 // 	When a marker is added, post it to the DB then reload the page centered on the current location.
 
 export default function Home() {
-	const [coordinates, setCoordinates] = useState({});
+	//const [coordinates, setCoordinates] = useState({});
 	const googleMapRef = React.createRef();
 
 	useEffect(() => {
@@ -20,42 +19,72 @@ export default function Home() {
 		// Set default map to current location
 		navigator.geolocation.getCurrentPosition(function (position) {
 			createGoogleMap(position.coords.latitude, position.coords.longitude);
-			setCoordinates(
-				{ lat: position.coords.latitude, lng: position.coords.longitude },
-				console.log("lat = " + coordinates.lat)
-			);
-			console.log("show lat: ");
-			console.log(coordinates);
+			//setCoordinates({ lat: position.coords.latitude, lng: position.coords.longitude });
+		});
+	};
+
+	// Function to draw marker based on db values for type, id, and coordinates
+	const drawMarker = (marker, map) => {
+		// get type, id, and coordinates
+		const markerUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/";
+		const icon = {
+			url: markerUri + marker.type + ".png",
+			scaledSize: new window.google.maps.Size(40, 30),
+		};
+
+		console.log("home drawMarker");
+		console.log(marker.location);
+		const newMarker = new window.google.maps.Marker({
+			position: new window.google.maps.LatLng(marker.lat, marker.lng),
+			icon: icon,
+			map: map,
 		});
 	};
 
 	const createGoogleMap = (lat, lng) => {
-		const position = { lat: lat, lng: lng };
 		const map = new window.google.maps.Map(googleMapRef.current, {
 			zoom: 16,
-			center: position,
+			center: { lat: lat, lng: lng },
 			disableDefaultUI: true,
 		});
-		//let infoWindow = new window.google.maps.InfoWindow();
+
+		// TEST - location by Mike's Drive In
+		// (45.447707652248454, -122.63189489426377)
+		const test = {
+			type: "letter",
+			text: "This is a test!",
+			lat: 45.447707652248454,
+			lng: -122.63189489426377,
+		};
+		drawMarker(test, map);
+
+		/* API.getMarkers().then((result) => {
+			result.data.forEach((item) => {
+				drawMarker(item, map);
+			});
+		}); */
+
+		let infoWindow = new window.google.maps.InfoWindow();
+
 		map.addListener("click", function (mapsMouseEvent) {
+			// TEST
 			// Create a new InfoWindow.
-			/* 			infoWindow.close();
+
+			infoWindow.close();
 			infoWindow = new window.google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
 			infoWindow.setContent(mapsMouseEvent.latLng.toString());
-			infoWindow.open(map); */
+			infoWindow.open(map);
 
+			//API.addMarker();
+			// TEST
 			// Add marker
-			const markerUriLetter =
-				"https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/letter.png";
-
-			const iconBase = "https://maps.google.com/mapfiles/kml/shapes/";
+			const markerUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/";
 			const icon = {
-				url: markerUriLetter,
-				scaledSize: new window.google.maps.Size(50, 50),
+				url: markerUri + "letter.png",
+				scaledSize: new window.google.maps.Size(40, 30),
 			};
 			const marker = new window.google.maps.Marker({
 				position: mapsMouseEvent.latLng,
-				//icon: { LetterMarker },
 				icon: icon,
 				map: map,
 			});
