@@ -15,32 +15,35 @@ class Home extends Component {
 		this.state = {
 			location: {},
 			activeMarker: {},
-			showModal: false,
+			showLeaveModal: false,
 			showPicker: false,
 			showLetter: false,
-			choice: ""
+			choice: "",
 		};
 	}
 
 	handleClick = (location, map) => {
 		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
 		//this.setState({ location: { lat: locationString[0], lng: locationString[1]},  showPicker: true  });
-		this.setState({ location: { lat: locationString[0], lng: locationString[1]},  showModal: true  });
+		this.setState({
+			location: { lat: locationString[0], lng: locationString[1] },
+			showLeaveModal: true,
+		});
 		//document.getElementById("picker").showModal();
-		document.getElementById("leaveLetter").showModal();
+		document.getElementById("leaveLetterModal").showModal();
 	};
 
-	closeModal = () => {
-		this.setState({ showModal: false });
+	closeLeaveModal = () => {
+		this.setState({ showLeaveModal: false });
 	};
 
-	closeLetter = () =>{
+	closeLetter = () => {
 		this.setState({ showLetter: false });
-	}
+	};
 
-	choose = (e) => {
-		this.setState({ choice: e.target.id, showPicker: false, showModal: true })
-	}
+	/* chooseLetterType = (e) => {
+		this.setState({ choice: e.target.id, showPicker: false, showModal: true });
+	}; */
 
 	getCurrentLocation = () => {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -66,12 +69,12 @@ class Home extends Component {
 			icon: icon,
 			map: map,
 			id: marker._id,
-			type: marker.type
+			type: marker.type,
 		});
-		if ( marker.type === "letter" ) {
+		if (marker.type === "letter") {
 			newMarker.text = marker.text;
 		} else {
-			console.log('drawMarker type = capture')
+			console.log("drawMarker type = capture");
 			newMarker.src = awsUri + marker.fileName;
 		}
 
@@ -159,16 +162,19 @@ class Home extends Component {
 			<div>
 				<SearchForm search={this.searchMaps} map={map} />
 				<div id="google-map" ref={this.googleMapRef}></div>
-				{this.state.showPicker ? (<Picker id="picker" choose={this.choose}/>) : null}
-				{this.state.showModal ? (
+				{this.state.showPicker ? (
+					<Picker id="picker" chooseLetterType={this.chooseLetterType} />
+				) : null}
+				{this.state.showLeaveModal ? (
 					<Modal
-						id="leaveLetter"
+						id="leaveLetterModal"
 						className="modal"
 						map={map}
 						send={this.newLetter}
-						close={this.closeModal}
+						closeLeaveModal={this.closeLeaveModal}
 						choice={this.state.choice}
 						location={this.state.location}
+						//chooseLetterType={this.chooseLetterType}
 					/>
 				) : null}
 				{this.state.showLetter ? (

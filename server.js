@@ -20,7 +20,6 @@ mongoose
 	.catch((err) => console.log(err));
 
 // use routes
-app.use("/api/images", require("./routes/images"));
 app.use("/api/letters", require("./routes/letters"));
 
 // Server static assets if we're in production

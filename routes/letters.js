@@ -47,12 +47,12 @@ const uploadFile = (imageFile, filename) => {
 // @desc    Put a letter in the database
 // @access  Public
 router.post("/leave", (req, res) => {
-	// Check letter type (image vs. text)
+	// Check letter type (capture vs. text)
 	// Upload and save URL if it's an image...
 	const newObj = {
 		lat: req.body.lat,
 		lng: req.body.lng,
-		type: req.body.type
+		type: req.body.type,
 	};
 
 	if (newObj.type === "letter") {

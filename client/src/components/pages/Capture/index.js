@@ -36,25 +36,30 @@ class Capture extends Component {
 
 	upload = (lat, lng, map) => {
 		//test values for lat and lng
-			const newObj = {
-				type: "capture",
-				key: this.state.key,
-				capture: this.state.capture,
-				//lat: lat,
-				//lng: lng,
-				lat: "45.43649922957826",
-				lng: "-122.64821022278443"
-			};
-	
-			API.saveImage(newObj).then( result => {
-				console.log('capture saved image');
+		const newObj = {
+			type: "capture",
+			key: this.state.key,
+			capture: this.state.capture,
+			//lat: lat,
+			//lng: lng,
+			lat: "45.43649922957826",
+			lng: "-122.64821022278443",
+		};
+
+		API.sendLetter(newObj).then((result) => {
+			console.log("Capture sendLetter result:");
+			console.log(result);
+			if (result.status === 200) {
+				// Do something like this when the component is integrated with map screen....
 				// Draw the new marker on the map and pan
 				//this.drawMarker(result.data, map);
 				//const position = new window.google.maps.LatLng(lat, lng);
+				//const position = new window.google.maps.LatLng(newObj.lat, newObj.lng);
 				//map.panTo(position);
-			});
-			this.setState({ key: getUniqueKey(), capture: "" });
-	}
+			}
+		});
+		this.setState({ key: getUniqueKey(), capture: "" });
+	};
 
 	render() {
 		const videoConstraints = {

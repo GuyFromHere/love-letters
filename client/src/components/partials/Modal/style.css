@@ -1,0 +1,22 @@
+.modalContainer {
+	height: 40vh;
+	width: 80vw;
+}
+
+.iconContainer {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+fa-keyboard,
+fa-camera {
+	color: firebrick;
+}
+
+#letterText {
+	width: 100%;
+	border: 1px solid firebrick;
+	outline: none;
+	resize: none;
+	overflow: auto;
+}
