@@ -2,24 +2,16 @@ import axios from "axios";
 
 export default {
 	// save image from image capture
-	saveImage: function (imageData, captureInfo) {
+	saveImage: function (captureObj) {
+		console.log('api saveImage');
+		console.log(captureObj);
 		// Remove header from data and keep the string
-		let base64Image = imageData.split(";base64,").pop();
-
-		// Send to server as string and convert it to an image
-		axios.post("/api/images/save", { imageData: base64Image, captureInfo: captureInfo });
-	},
-	// Get  URI for a static Google map of the specified location
-	getLocation: function (location) {
-		return axios.get("/api/letters/map/" + location);
+		//let base64Image = captureData.capture.split(";base64,").pop();
+		return axios.post("/api/letters/leave", captureObj );
 	},
 	// Send text letter
 	sendLetter: function (letter) {
 		return axios.post("/api/letters/leave", letter);
-	},
-	// get Embedded map
-	getEmbed: function (location) {
-		return axios.post("/api/letters/location", { location: location });
 	},
 	// get markers for each letter in the db
 	getMarkers: function () {

@@ -34,33 +34,11 @@ class Capture extends Component {
 		this.setState({ capture: "" });
 	};
 
-	upload = (lat, lng, map) => {
-		//test values for lat and lng
-			const newObj = {
-				type: "capture",
-				key: this.state.key,
-				capture: this.state.capture,
-				//lat: lat,
-				//lng: lng,
-				lat: "45.434343434",
-				lng: "-122.543445566"
-			};
-	
-			API.saveImage(newObj).then( result => {
-				console.log('capture saved image');
-				// Draw the new marker on the map and pan
-				//this.drawMarker(result.data, map);
-				//const position = new window.google.maps.LatLng(lat, lng);
-				//map.panTo(position);
-			});
-			this.setState({ key: getUniqueKey(), capture: "" });
-	}
-/* 
 	upload = () => {
 		// Perform upload...sending all state variables in case I want to send extra info in the route
 		API.saveImage(this.state.capture, this.state.key);
 		this.setState({ key: getUniqueKey(), capture: "" });
-	}; */
+	};
 
 	render() {
 		const videoConstraints = {

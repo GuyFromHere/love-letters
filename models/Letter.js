@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const LetterSchema = new Schema({
-	key: {
+	fileName: {
 		type: String,
 		required: false,
 	},

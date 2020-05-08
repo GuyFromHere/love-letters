@@ -38,12 +38,13 @@ const uploadFile = (imageFile, filename) => {
 
 // @route   POST /api/images/save
 // @desc    Save images test route
-// @access  Private
-// router.post("/save", auth, (req, res) => {
+// @access  Public
 router.post("/save", (req, res) => {
 	const fileName = req.body.captureInfo + "_image.png";
+	
 	// Upload base64 image directly to AWS...
 	uploadFile(req.body.imageData, fileName);
+
 });
 
 module.exports = router;
