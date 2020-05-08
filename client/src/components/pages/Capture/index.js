@@ -42,8 +42,8 @@ class Capture extends Component {
 				capture: this.state.capture,
 				//lat: lat,
 				//lng: lng,
-				lat: "45.434343434",
-				lng: "-122.543445566"
+				lat: "45.43649922957826",
+				lng: "-122.64821022278443"
 			};
 	
 			API.saveImage(newObj).then( result => {
@@ -55,12 +55,6 @@ class Capture extends Component {
 			});
 			this.setState({ key: getUniqueKey(), capture: "" });
 	}
-/* 
-	upload = () => {
-		// Perform upload...sending all state variables in case I want to send extra info in the route
-		API.saveImage(this.state.capture, this.state.key);
-		this.setState({ key: getUniqueKey(), capture: "" });
-	}; */
 
 	render() {
 		const videoConstraints = {

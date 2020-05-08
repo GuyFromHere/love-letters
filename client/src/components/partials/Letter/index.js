@@ -4,7 +4,7 @@ export default function Letter(props) {
 
 	return (
 		<dialog id={props.id} className="letterContainer">
-			<p>{props.text}</p>
+			{props.type === "letter" ? (<p>{props.text}</p>) : (<img src={props.src}></img>)}
 			<button className="btnCancel" onClick={props.close}>
 				CLOSE
 			</button>

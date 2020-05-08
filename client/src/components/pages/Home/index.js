@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../../utils/api";
 import Modal from "../../partials/Modal";
+import Picker from "../../partials/Picker";
 import Letter from "../../partials/Letter";
 import SearchForm from "../../partials/SearchForm";
 import "./style.css";
@@ -15,14 +16,17 @@ class Home extends Component {
 			location: {},
 			activeMarker: {},
 			showModal: false,
+			showPicker: false,
 			showLetter: false,
+			choice: ""
 		};
 	}
 
 	handleClick = (location, map) => {
 		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
-		this.setState({ location: { lat: locationString[0], lng: locationString[1] } });
-		this.setState({ showModal: true });
+		//this.setState({ location: { lat: locationString[0], lng: locationString[1]},  showPicker: true  });
+		this.setState({ location: { lat: locationString[0], lng: locationString[1]},  showModal: true  });
+		//document.getElementById("picker").showModal();
 		document.getElementById("leaveLetter").showModal();
 	};
 
@@ -32,6 +36,10 @@ class Home extends Component {
 
 	closeLetter = () =>{
 		this.setState({ showLetter: false });
+	}
+
+	choose = (e) => {
+		this.setState({ choice: e.target.id, showPicker: false, showModal: true })
 	}
 
 	getCurrentLocation = () => {
@@ -48,6 +56,7 @@ class Home extends Component {
 	drawMarker = (marker, map) => {
 		// get type, id, and location
 		const markerUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/";
+		const awsUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/publicprefix/";
 		const icon = {
 			url: markerUri + marker.type + ".png",
 			scaledSize: new window.google.maps.Size(40, 30),
@@ -57,8 +66,14 @@ class Home extends Component {
 			icon: icon,
 			map: map,
 			id: marker._id,
-			text: marker.text
+			type: marker.type
 		});
+		if ( marker.type === "letter" ) {
+			newMarker.text = marker.text;
+		} else {
+			console.log('drawMarker type = capture')
+			newMarker.src = awsUri + marker.fileName;
+		}
 
 		newMarker.addListener("click", (e) => {
 			// Show letter in modal when marker is clicked
@@ -79,8 +94,6 @@ class Home extends Component {
 		};
 
 		API.sendLetter(newObj).then((result) => {
-			console.log('home newLetter drawMarker')
-			console.log(result.data)
 			// Draw the new marker on the map and pan
 			this.drawMarker(result.data, map);
 			const position = new window.google.maps.LatLng(lat, lng);
@@ -89,6 +102,7 @@ class Home extends Component {
 		this.setState({ showModal: false });
 	};
 
+	// submit search query and show map for result
 	searchMaps = (query, map) => {
 		console.log("Home searchmaps query");
 		console.log(query);
@@ -145,6 +159,7 @@ class Home extends Component {
 			<div>
 				<SearchForm search={this.searchMaps} map={map} />
 				<div id="google-map" ref={this.googleMapRef}></div>
+				{this.state.showPicker ? (<Picker id="picker" choose={this.choose}/>) : null}
 				{this.state.showModal ? (
 					<Modal
 						id="leaveLetter"
@@ -152,16 +167,19 @@ class Home extends Component {
 						map={map}
 						send={this.newLetter}
 						close={this.closeModal}
+						choice={this.state.choice}
 						location={this.state.location}
 					/>
 				) : null}
 				{this.state.showLetter ? (
 					<Letter
-						id={this.state.activeMarker.id}
 						className="letterModal"
 						close={this.closeLetter}
 						map={map}
+						id={this.state.activeMarker.id}
 						text={this.state.activeMarker.text}
+						type={this.state.activeMarker.type}
+						src={this.state.activeMarker.src}
 					/>
 				) : null}
 			</div>
