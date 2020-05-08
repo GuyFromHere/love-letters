@@ -79,10 +79,11 @@ class Home extends Component {
 		};
 
 		API.sendLetter(newObj).then((result) => {
+			console.log('home newLetter drawMarker')
+			console.log(result.data)
 			// Draw the new marker on the map and pan
-			this.drawMarker(newObj, map);
+			this.drawMarker(result.data, map);
 			const position = new window.google.maps.LatLng(lat, lng);
-			console.log(position);
 			map.panTo(position);
 		});
 		this.setState({ showModal: false });
