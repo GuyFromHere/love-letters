@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ModalCard from "../ModalCard";
 import "./style.css";
 
 export default function Modal(props) {
@@ -18,52 +19,33 @@ export default function Modal(props) {
 		<dialog id={props.id} className="modalContainer">
 			<div className="iconContainer">
 				<i
-					class="far fa-keyboard fa-5x"
+					class="far fa-keyboard fa-3x"
 					id="text"
 					onClick={(e) => {
 						chooseLetterType(e);
 					}}
 				></i>
 				<i
-					class="fas fa-camera fa-5x"
+					class="fas fa-camera fa-3x"
 					id="capture"
 					onClick={(e) => {
 						chooseLetterType(e);
 					}}
 				></i>
 			</div>
-			{letterType === "capture" ? (
-				<div className="modalCard">
-					<div className="modalHeader">
-						<h2>Capture Component Here</h2>
-					</div>
-					<div className="modalFooter">
-						<button className="btnCancel" onClick={props.closeLeaveModal}>
-							CLOSE
-						</button>
-						<button className="btnSubmit">SEND</button>
-					</div>
+			{letterType ? (
+				<div className="modalCardContent" style={{ display: "block" }}>
+					<ModalCard
+						letterType={letterType}
+						handleClick={handleClick}
+						closeLeaveModal={props.closeLeaveModal}
+					/>
 				</div>
-			) : null}
-			{letterType === "text" ? (
-				<div className="modalCard">
-					<div className="modalBody">
-						<textarea
-							id="letterText"
-							placeholder="Say something lovely!"
-							rows="10"
-						></textarea>
-					</div>
-					<div className="modalFooter">
-						<button className="btnCancel" onClick={props.closeLeaveModal}>
-							CLOSE
-						</button>
-						<button className="btnSubmit" onClick={handleClick}>
-							SEND
-						</button>
-					</div>
+			) : (
+				<div className="closeModalContainer">
+					<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
 				</div>
-			) : null}
+			)}
 		</dialog>
 	);
 }

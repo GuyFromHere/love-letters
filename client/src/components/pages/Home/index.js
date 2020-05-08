@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../../../utils/api";
 import Modal from "../../partials/Modal";
-import Picker from "../../partials/Picker";
 import Letter from "../../partials/Letter";
 import SearchForm from "../../partials/SearchForm";
 import "./style.css";
@@ -16,7 +15,6 @@ class Home extends Component {
 			location: {},
 			activeMarker: {},
 			showLeaveModal: false,
-			showPicker: false,
 			showLetter: false,
 			choice: "",
 		};
@@ -24,12 +22,10 @@ class Home extends Component {
 
 	handleClick = (location, map) => {
 		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
-		//this.setState({ location: { lat: locationString[0], lng: locationString[1]},  showPicker: true  });
 		this.setState({
 			location: { lat: locationString[0], lng: locationString[1] },
 			showLeaveModal: true,
 		});
-		//document.getElementById("picker").showModal();
 		document.getElementById("leaveLetterModal").showModal();
 	};
 
@@ -40,10 +36,6 @@ class Home extends Component {
 	closeLetter = () => {
 		this.setState({ showLetter: false });
 	};
-
-	/* chooseLetterType = (e) => {
-		this.setState({ choice: e.target.id, showPicker: false, showModal: true });
-	}; */
 
 	getCurrentLocation = () => {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -162,9 +154,6 @@ class Home extends Component {
 			<div>
 				<SearchForm search={this.searchMaps} map={map} />
 				<div id="google-map" ref={this.googleMapRef}></div>
-				{this.state.showPicker ? (
-					<Picker id="picker" chooseLetterType={this.chooseLetterType} />
-				) : null}
 				{this.state.showLeaveModal ? (
 					<Modal
 						id="leaveLetterModal"

@@ -1,5 +1,7 @@
 .modalContainer {
-	height: 40vh;
+	padding: 1rem;
+	border: none;
+	height: 10vh;
 	width: 80vw;
 }
 
@@ -13,10 +15,25 @@ fa-camera {
 	color: firebrick;
 }
 
+.modalCardContent {
+	position: absolute;
+	top: 14vh;
+	right: 0;
+	background-color: white;
+	height: 30vh;
+	width: 80vw;
+	padding: 1rem;
+	margin: 0;
+}
+
 #letterText {
 	width: 100%;
 	border: 1px solid firebrick;
 	outline: none;
 	resize: none;
 	overflow: auto;
+}
+
+.closeModalContainer {
+	text-align: center;
 }
