@@ -4,7 +4,7 @@ import "./style.css";
 export default function Modal(props) {
 	const handleClick = () => {
 		const text = document.getElementById("letterText").value;
-		props.send(props.location.lat, props.location.lng, text);
+		props.send(props.location.lat, props.location.lng, text, props.map);
 	};
 
 	return (

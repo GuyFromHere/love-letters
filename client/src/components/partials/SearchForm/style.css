@@ -1,0 +1,9 @@
+.searchContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#searchBtn {
+	display: inline;
+}

@@ -1,35 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import API from "../../../utils/api";
 import Modal from "../../partials/Modal";
+import SearchForm from "../../partials/SearchForm";
 import "./style.css";
 
-//	TODO:
-//	Store marker types and location in DB
-// 	When page loads, get marker info and load it on to the map
-// 	When a marker is added, post it to the DB then reload the page centered on the current location.
+var map;
 
-export default function Home() {
-	const [location, setLocation] = useState({ lat: "", lng: "" });
-	const [showModal, setShowModal] = useState(false);
-	const googleMapRef = React.createRef();
-	let map;
+class Home extends Component {
+	constructor(props) {
+		super(props);
+		this.googleMapRef = React.createRef();
+		this.state = {
+			location: {},
+			showModal: false,
+		};
+	}
 
-	useEffect(() => {
-		loadCurrentLocation();
-	}, []);
+	handleClick = (location, map) => {
+		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
+		this.setState({ location: { lat: locationString[0], lng: locationString[1] } });
+		this.setState({ showModal: true });
+		document.getElementById("leaveLetter").showModal();
+	};
 
-	const loadCurrentLocation = () => {
-		// Set default map to current location
+	closeModal = () => {
+		this.setState({ showModal: false });
+	};
+
+	getCurrentLocation = () => {
 		navigator.geolocation.getCurrentPosition(function (position) {
-			createGoogleMap(position.coords.latitude, position.coords.longitude);
-			setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+			const location = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+			};
+			return location;
 		});
 	};
 
 	// Function to draw marker based on db values for type, id, and location
-	const drawMarker = (marker, map) => {
-		console.log("home drawmarker");
-		console.log(map);
+	drawMarker = (marker, map) => {
 		// get type, id, and location
 		const markerUri = "https://love-letters-gfh.s3-us-west-2.amazonaws.com/markers/";
 		const icon = {
@@ -43,8 +52,9 @@ export default function Home() {
 		});
 	};
 
-	const newLetter = (lat, lng, text, map) => {
-		// test text for testing database
+	// send as prop to Modal.
+	// Call in onClick event to get the info for the new letter.
+	newLetter = (lat, lng, text, map) => {
 		const newObj = {
 			type: "letter",
 			text: text,
@@ -53,86 +63,85 @@ export default function Home() {
 		};
 
 		API.sendLetter(newObj).then((result) => {
-			console.log("Letter saved to DB.");
 			// Draw the new marker on the map and pan
-			drawMarker(newObj, map);
-			// panTo not working...
+			this.drawMarker(newObj, map);
 			const position = new window.google.maps.LatLng(lat, lng);
 			console.log(position);
-			//map.panTo(position);
+			map.panTo(position);
 		});
-		setShowModal(false);
+		this.setState({ showModal: false });
 	};
 
-	/* const addMarker = (location, map) => {
-		// Parse location info from click event so we can save the location in the DB
-		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
-		const position = new window.google.maps.LatLng(locationString[0], locationString[1]);
-
-		// Call function to create letter here...
-
-		// test text for testing database
-		const newObj = {
-			type: "letter",
-			text: "This is a test.",
-			lat: locationString[0],
-			lng: locationString[1],
+	searchMaps = (query, map) => {
+		console.log("Home searchmaps query");
+		console.log(query);
+		const request = {
+			query: query,
+			fields: ["name", "geometry"],
 		};
-
-		API.sendLetter(newObj).then((result) => {
-			console.log("Letter saved to DB.");
-		});
-
-		// Draw the new marker on the map and pan
-		drawMarker(newObj, map);
-		map.panTo(position);
-	}; */
-
-	const handleClick = (location, map) => {
-		//
-		let locationString = location.toString().replace(")", "").replace("(", "").split(", ");
-		setShowModal(true);
-		setLocation({ lat: locationString[0], lng: locationString[1] });
-		document.getElementById("leaveLetter").showModal();
+		/* const service = new window.google.maps.places.PlacesService(map);
+		service.findPlaceFromQuery(request, function (results, status) {
+			if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+				
+				map.setCenter(results[0].geometry.location);
+			}
+		}); */
 	};
 
-	const closeModal = () => {
-		setShowModal(false);
-	};
+	componentDidMount() {
+		let currentComponent = this;
 
-	const createGoogleMap = (lat, lng) => {
-		map = new window.google.maps.Map(googleMapRef.current, {
+		// render googlemap
+		map = new window.google.maps.Map(this.googleMapRef.current, {
 			zoom: 16,
-			center: { lat: lat, lng: lng },
+			center: { lat: -34.397, lng: 150.644 },
 			disableDefaultUI: true,
 		});
-
+		console.log("home map object: ");
+		console.log(map);
 		map.addListener("click", function (mapsMouseEvent) {
-			// call addMarker to handle event
-			//addMarker(mapsMouseEvent.latLng, map);
-			handleClick(mapsMouseEvent.latLng, map);
+			currentComponent.handleClick(mapsMouseEvent.latLng, map);
 		});
 
 		// Get letters from DB and draw them on the map after it loads
 		API.getMarkers().then((result) => {
 			result.data.forEach((item) => {
-				drawMarker(item, map);
+				this.drawMarker(item, map);
 			});
 		});
-	};
 
-	return (
-		<div>
-			<div id="google-map" ref={googleMapRef}></div>
-			{showModal ? (
-				<Modal
-					id="leaveLetter"
-					className="modal"
-					send={newLetter}
-					close={closeModal}
-					location={location}
-				/>
-			) : null}
-		</div>
-	);
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				var pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+				map.setCenter(pos);
+			});
+		} else {
+			// Browser doesn't support Geolocation
+			// handleErrorFunctionHere();
+		}
+	}
+
+	render() {
+		return (
+			<div>
+				<SearchForm search={this.searchMaps} map={map} />
+				<div id="google-map" ref={this.googleMapRef}></div>
+				{this.state.showModal ? (
+					<Modal
+						id="leaveLetter"
+						className="modal"
+						map={map}
+						send={this.newLetter}
+						close={this.closeModal}
+						location={this.state.location}
+					/>
+				) : null}
+			</div>
+		);
+	}
 }
+
+export default Home;
