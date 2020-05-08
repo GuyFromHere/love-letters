@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
 export default function Letter(props) {
+
 	return (
-		<div className="letterContainer">
-			<h1>Leave a letter for {props.location}</h1>
-		</div>
+		<dialog id={props.id} className="letterContainer">
+			<p>{props.text}</p>
+			<button className="btnCancel" onClick={props.close}>
+				CLOSE
+			</button>
+		</dialog>
 	);
 }

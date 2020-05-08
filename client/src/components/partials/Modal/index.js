@@ -13,7 +13,6 @@ export default function Modal(props) {
 				<h2>Type your message:</h2>
 			</div>
 			<div className="modalBody">
-				{props.location.lat} {props.location.lng}
 				<textarea id="letterText"></textarea>
 			</div>
 			<div className="modalFooter">

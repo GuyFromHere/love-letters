@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../../utils/api";
 import Modal from "../../partials/Modal";
+import Letter from "../../partials/Letter";
 import SearchForm from "../../partials/SearchForm";
 import "./style.css";
 
@@ -12,7 +13,9 @@ class Home extends Component {
 		this.googleMapRef = React.createRef();
 		this.state = {
 			location: {},
+			activeMarker: {},
 			showModal: false,
+			showLetter: false,
 		};
 	}
 
@@ -26,6 +29,10 @@ class Home extends Component {
 	closeModal = () => {
 		this.setState({ showModal: false });
 	};
+
+	closeLetter = () =>{
+		this.setState({ showLetter: false });
+	}
 
 	getCurrentLocation = () => {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -49,6 +56,15 @@ class Home extends Component {
 			position: new window.google.maps.LatLng(marker.lat, marker.lng),
 			icon: icon,
 			map: map,
+			id: marker._id,
+			text: marker.text
+		});
+
+		newMarker.addListener("click", (e) => {
+			// Show letter in modal when marker is clicked
+			map.panTo(newMarker.position);
+			this.setState({ activeMarker: newMarker, showLetter: true });
+			document.getElementById(newMarker.id).showModal();
 		});
 	};
 
@@ -97,8 +113,7 @@ class Home extends Component {
 			center: { lat: -34.397, lng: 150.644 },
 			disableDefaultUI: true,
 		});
-		console.log("home map object: ");
-		console.log(map);
+
 		map.addListener("click", function (mapsMouseEvent) {
 			currentComponent.handleClick(mapsMouseEvent.latLng, map);
 		});
@@ -137,6 +152,15 @@ class Home extends Component {
 						send={this.newLetter}
 						close={this.closeModal}
 						location={this.state.location}
+					/>
+				) : null}
+				{this.state.showLetter ? (
+					<Letter
+						id={this.state.activeMarker.id}
+						className="letterModal"
+						close={this.closeLetter}
+						map={map}
+						text={this.state.activeMarker.text}
 					/>
 				) : null}
 			</div>
