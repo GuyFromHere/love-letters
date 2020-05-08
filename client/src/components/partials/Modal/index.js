@@ -37,6 +37,9 @@ export default function Modal(props) {
 				<div className="modalCardContent" style={{ display: "block" }}>
 					<ModalCard
 						letterType={letterType}
+						location={props.location}
+						map={props.map}
+						drawMarker={props.drawMarker}
 						handleClick={handleClick}
 						closeLeaveModal={props.closeLeaveModal}
 					/>

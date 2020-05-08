@@ -1,0 +1,25 @@
+.webcamContainer {
+	padding: 0;
+	margin: 0;
+	height: auto;
+}
+
+video {
+	width: 100%;
+	height: auto;
+}
+
+.captureBtnContainer {
+	position: relative;
+	top: -5rem;
+	width: 100%;
+	text-align: center;
+}
+
+.fa-record-vinyl {
+	color: firebrick;
+}
+
+.fa-record-vinyl:hover {
+	color: black;
+}

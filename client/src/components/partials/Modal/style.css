@@ -1,6 +1,13 @@
+dialog {
+	position: absolute;
+	top: 20vh;
+	border-radius: 10px;
+}
+
 .modalContainer {
 	padding: 1rem;
 	border: none;
+	border-radius: 10px;
 	height: 10vh;
 	width: 80vw;
 }
@@ -8,6 +15,7 @@
 .iconContainer {
 	display: flex;
 	justify-content: space-evenly;
+	border-radius: 10px;
 }
 
 fa-keyboard,
@@ -17,13 +25,15 @@ fa-camera {
 
 .modalCardContent {
 	position: absolute;
-	top: 14vh;
+	top: 10vh;
 	right: 0;
 	background-color: white;
-	height: 30vh;
+	border-radius: 10px;
+	/* height: 30vh; */
 	width: 80vw;
 	padding: 1rem;
 	margin: 0;
+	overflow: hidden;
 }
 
 #letterText {

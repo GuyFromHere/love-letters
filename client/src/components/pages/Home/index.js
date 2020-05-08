@@ -125,6 +125,7 @@ class Home extends Component {
 		});
 
 		map.addListener("click", function (mapsMouseEvent) {
+			map.panTo(mapsMouseEvent.latLng);
 			currentComponent.handleClick(mapsMouseEvent.latLng, map);
 		});
 
@@ -160,6 +161,7 @@ class Home extends Component {
 						className="modal"
 						map={map}
 						send={this.newLetter}
+						drawMarker={this.drawMarker}
 						closeLeaveModal={this.closeLeaveModal}
 						choice={this.state.choice}
 						location={this.state.location}

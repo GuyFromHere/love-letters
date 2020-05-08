@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
-import CaptureImg from "../../partials/CaptureImg";
+import CaptureImg from "../CaptureImg";
 import API from "../../../utils/api.js";
 import "./style.css";
 
@@ -11,10 +11,13 @@ const getUniqueKey = () => {
 };
 
 class Capture extends Component {
-	constructor() {
+	constructor(props) {
 		super();
 		// initialize empty state variable
 		this.state = { key: getUniqueKey() };
+
+		console.log("partials capture props");
+		console.log(props);
 	}
 
 	setRef = (webcam) => {
@@ -27,6 +30,9 @@ class Capture extends Component {
 
 		// load captured image in to img element
 		this.setState({ capture: imageData });
+
+		// Hide capture button
+		document.getElementById("captureBtn").style.display = "none";
 	};
 
 	reset = () => {
@@ -34,28 +40,28 @@ class Capture extends Component {
 		this.setState({ capture: "" });
 	};
 
-	upload = (lat, lng, map) => {
+	upload = (location, map) => {
 		//test values for lat and lng
 		const newObj = {
 			type: "capture",
 			key: this.state.key,
 			capture: this.state.capture,
-			//lat: lat,
-			//lng: lng,
-			lat: "45.43649922957826",
-			lng: "-122.64821022278443",
+			lat: location.lat,
+			lng: location.lng,
 		};
 
 		API.sendLetter(newObj).then((result) => {
 			console.log("Capture sendLetter result:");
 			console.log(result);
+			console.log("Capture sendLetter map:");
+			console.log(map);
+
 			if (result.status === 200) {
-				// Do something like this when the component is integrated with map screen....
 				// Draw the new marker on the map and pan
-				//this.drawMarker(result.data, map);
-				//const position = new window.google.maps.LatLng(lat, lng);
-				//const position = new window.google.maps.LatLng(newObj.lat, newObj.lng);
-				//map.panTo(position);
+				this.props.drawMarker(result.data, map);
+				const position = new window.google.maps.LatLng(newObj.lat, newObj.lng);
+				map.panTo(position);
+				this.props.closeLeaveModal();
 			}
 		});
 		this.setState({ key: getUniqueKey(), capture: "" });
@@ -68,35 +74,27 @@ class Capture extends Component {
 			facingMode: "user",
 		};
 
-		const divStyle = {
-			padding: 0,
-			marginTop: 80,
-			marginBottom: 20,
-		};
-
 		return (
-			<div className="container">
-				<div className="webcamContainer" style={divStyle}>
-					{this.state.key ? <h1>{this.state.key}</h1> : <h1>key here</h1>}
-					{this.state.capture ? (
-						<CaptureImg
-							src={this.state.capture}
-							reset={this.reset}
-							upload={this.upload}
-						/>
-					) : (
-						<Webcam
-							className="webcam"
-							audio={false}
-							ref={this.setRef}
-							width={350}
-							screenshotFormat="image/png"
-							videoConstraints={videoConstraints}
-						/>
-					)}
-					<br></br>
-					<input type="submit" onClick={this.capture} value="Capture"></input>
+			<div className="webcamContainer">
+				{this.state.capture ? (
+					<CaptureImg
+						src={this.state.capture}
+						reset={this.reset}
+						upload={this.upload(this.props.location, this.props.map)}
+					/>
+				) : (
+					<Webcam
+						className="webcam"
+						audio={false}
+						ref={this.setRef}
+						screenshotFormat="image/png"
+						//videoConstraints={videoConstraints}
+					/>
+				)}
+				<div className="captureBtnContainer">
+					<i id="captureBtn" class="fas fa-record-vinyl fa-3x" onClick={this.capture}></i>
 				</div>
+				{/* <input type="submit" onClick={this.capture} value="Capture"></input> */}
 			</div>
 		);
 	}

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Capture from "../Capture";
+import "./style.css";
 
 export default function ModalCard(props) {
 	const textCard = (
@@ -7,11 +9,9 @@ export default function ModalCard(props) {
 				<textarea id="letterText" placeholder="Say something lovely!" rows="10"></textarea>
 			</div>
 			<div className="modalFooter">
-				<button className="btnSubmit" onClick={props.handleClick}>
-					SEND
-				</button>
 				<div className="closeModalContainer">
 					<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
+					<i class="far fa-paper-plane fa-2x" onClick={props.handleClick}></i>
 				</div>
 			</div>
 		</div>
@@ -19,11 +19,13 @@ export default function ModalCard(props) {
 
 	const captureCard = (
 		<div className="modalCard">
-			<div className="modalHeader">
-				<h2>Capture Component Here</h2>
-			</div>
-			<div className="modalFooter">
-				<button className="btnSubmit">SEND</button>
+			<div className="modalBody">
+				<Capture
+					location={props.location}
+					closeLeaveModal={props.closeLeaveModal}
+					map={props.map}
+					drawMarker={props.drawMarker}
+				/>
 			</div>
 			<div className="closeModalContainer">
 				<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
