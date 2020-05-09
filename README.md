@@ -3,7 +3,7 @@ Share images or text anywhere in the world. Click [here](https://love-letters-gf
 
 # Concept
 
-When I heard the first stories of the toll COVID-19 was taking on other countries early on my impulse was to reach out to those affected and offer some kind of support. I thought of this project as a way to feed a little positivity in to the world. When you're thinking of someone in need, send them a positive note. A "love letter". 
+When I heard the first stories of the toll COVID-19 was taking on other countries early on my impulse was to reach out to those affected and offer some kind of support. I thought of this project as a way to feed a little positivity in to the world. When you're thinking of someone in need, send them a positive note: a "love letter". 
 
 # How To Use The App
 
