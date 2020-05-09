@@ -9,7 +9,7 @@ When I heard the first stories of the toll COVID-19 was taking on other countrie
 
 Click on a location and select the Camera to take a picture or the Keyboard to leave a note. 
 
-When finished, send your note and an icon will appear where you left it on the map. 
+An icon will appear where you clicked on the map. 
 
 Click the icons to see or read notes left by others. 
 
