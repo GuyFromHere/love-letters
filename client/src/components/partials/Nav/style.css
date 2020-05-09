@@ -1,8 +1,10 @@
 ul {
 	padding: 10px;
+	margin: 0;
 	text-align: center;
 	background-color: rgb(199, 19, 19);
 	height: 10vh;
+
 }
 
 li {
@@ -10,6 +12,7 @@ li {
 	margin: 1rem;
 	list-style-type: none;
 	font-size: 36pt;
+
 }
 
 a {

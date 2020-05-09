@@ -13,4 +13,8 @@ export default {
 	getMarkers: function () {
 		return axios.get("/api/letters/get");
 	},
+	// 
+	searchMaps: function(query) {
+		return axios.get("/api/letters/search/" + query )
+	}
 };

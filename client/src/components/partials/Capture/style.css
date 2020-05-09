@@ -11,13 +11,13 @@ video {
 
 .captureBtnContainer {
 	position: relative;
-	top: -5rem;
+	top: -3.5rem;
 	width: 100%;
 	text-align: center;
 }
 
 .fa-record-vinyl {
-	color: firebrick;
+	color: rgb(199, 19, 19);
 }
 
 .fa-record-vinyl:hover {

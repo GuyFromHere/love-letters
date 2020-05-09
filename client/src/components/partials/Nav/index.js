@@ -5,7 +5,7 @@ export default function Nav() {
 	return (
 		<ul>
 			<li>
-				<a href="/">Home</a>
+				<a href="/">Love Letters</a>
 			</li>
 		</ul>
 	);

@@ -19,14 +19,14 @@ export default function Modal(props) {
 		<dialog id={props.id} className="modalContainer">
 			<div className="iconContainer">
 				<i
-					class="far fa-keyboard fa-3x"
+					className="far fa-keyboard fa-3x"
 					id="text"
 					onClick={(e) => {
 						chooseLetterType(e);
 					}}
 				></i>
 				<i
-					class="fas fa-camera fa-3x"
+					className="fas fa-camera fa-3x"
 					id="capture"
 					onClick={(e) => {
 						chooseLetterType(e);
@@ -46,7 +46,7 @@ export default function Modal(props) {
 				</div>
 			) : (
 				<div className="closeModalContainer">
-					<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
+					<i className="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
 				</div>
 			)}
 		</dialog>

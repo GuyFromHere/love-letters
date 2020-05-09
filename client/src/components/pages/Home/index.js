@@ -16,7 +16,6 @@ class Home extends Component {
 			activeMarker: {},
 			showLeaveModal: false,
 			showLetter: false,
-			choice: "",
 		};
 	}
 
@@ -97,21 +96,11 @@ class Home extends Component {
 		this.setState({ showModal: false });
 	};
 
-	// submit search query and show map for result
-	searchMaps = (query, map) => {
-		console.log("Home searchmaps query");
-		console.log(query);
-		const request = {
-			query: query,
-			fields: ["name", "geometry"],
-		};
-		/* const service = new window.google.maps.places.PlacesService(map);
-		service.findPlaceFromQuery(request, function (results, status) {
-			if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-				
-				map.setCenter(results[0].geometry.location);
-			}
-		}); */
+	// submit search query and center map on first result
+	searchMaps = (query) => {
+		API.searchMaps(query).then(result => {
+			map.setCenter(result.data.location);
+		})
 	};
 
 	componentDidMount() {

@@ -8,7 +8,7 @@ dialog {
 	padding: 1rem;
 	border: none;
 	border-radius: 10px;
-	height: 10vh;
+	height: 12vh;
 	width: 80vw;
 }
 
@@ -18,9 +18,11 @@ dialog {
 	border-radius: 10px;
 }
 
-fa-keyboard,
-fa-camera {
-	color: firebrick;
+.fa-keyboard,
+.fa-camera,
+.fa-times-circle,
+.fa-paper-plane {
+	color: rgb(199, 19, 19)!important;
 }
 
 .modalCardContent {
@@ -33,11 +35,12 @@ fa-camera {
 	width: 80vw;
 	padding: 1rem;
 	margin: 0;
+	margin-top: 1rem;
 	overflow: hidden;
 }
 
 #letterText {
-	width: 100%;
+	width: 78vw;
 	border: 1px solid firebrick;
 	outline: none;
 	resize: none;

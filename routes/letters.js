@@ -9,9 +9,7 @@ const Letter = require("../models/Letter");
 // Maps api variables
 const uriStart = "https://maps.googleapis.com/maps/api/";
 const uriKeyPrefix = "&key=";
-const staticMapArgs = "staticmap?zoom=14&size=400x400&center=";
-const geoCodeArgs = "geocode/json?sensor=false&components=postal_code:";
-const embedStart = "https://www.google.com/maps/embed/v1/place?q=";
+const placesArgs = "place/findplacefromtext/json?inputtype=textquery&fields=geometry&input="
 const MAPS_CLIENT = process.env.MAPS_CLIENT || config.get("MAPS_CLIENT");
 const MAPS_SERVER = process.env.MAPS_SERVER || config.get("MAPS_SERVER");
 //////////////////////
@@ -78,6 +76,15 @@ router.get("/get", (req, res) => {
 	Letter.find().then((results) => {
 		res.json(results);
 	});
+});
+
+// @route   GET /api/letters/search
+// @desc    
+// @access  Public
+router.get("/search/:place", (req, res) => {
+	axios.get(uriStart + placesArgs + req.params.place + uriKeyPrefix + MAPS_SERVER).then(result => {
+		res.json({location: result.data.candidates[0].geometry.location})
+	})
 });
 
 module.exports = router;

@@ -1,4 +1,5 @@
 import React from "react";
+import './style.css';
 
 export default function SearchForm(props) {
 	const handleSubmit = () => {
@@ -18,7 +19,7 @@ export default function SearchForm(props) {
 			<input id="searchInput" onKeyDown={(e) => onKeyDown(e)} />
 			<i
 				id="searchBtn"
-				class="fas fa-search form-control"
+				className="fas fa-search fa-3x form-control"
 				onClick={() => {
 					handleSubmit();
 				}}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Capture from "../Capture";
 import "./style.css";
 
@@ -10,8 +10,8 @@ export default function ModalCard(props) {
 			</div>
 			<div className="modalFooter">
 				<div className="closeModalContainer">
-					<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
-					<i class="far fa-paper-plane fa-2x" onClick={props.handleClick}></i>
+					<i className="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
+					<i className="far fa-paper-plane fa-2x" onClick={props.handleClick}></i>
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,7 @@ export default function ModalCard(props) {
 				/>
 			</div>
 			<div className="closeModalContainer">
-				<i class="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
+				<i className="far fa-times-circle fa-2x" onClick={props.closeLeaveModal}></i>
 			</div>
 		</div>
 	);

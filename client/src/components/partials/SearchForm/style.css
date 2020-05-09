@@ -2,8 +2,19 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	background-color: rgb(199, 19, 19);
+	padding: 4px;
+	margin-top: -2px;
+}
+
+#searchInput {
+	padding: 10px;
+	margin-right: 2px;
+	width: 90vw;
+	outline: none;
 }
 
 #searchBtn {
 	display: inline;
+	color: white;
 }
