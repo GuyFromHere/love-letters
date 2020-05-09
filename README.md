@@ -1,5 +1,5 @@
 # love-letters
-Location based message and image sharing app. Click [here](https://love-letters-gfh.herokuapp.com/) to try it out (preferably from your smart phone).
+Share images or text anywhere in the world. Click [here](https://love-letters-gfh.herokuapp.com/) to try it out (preferably from your smart phone).
 
 # Concept
 
