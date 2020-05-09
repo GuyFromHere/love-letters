@@ -18,3 +18,7 @@ Use the search bar to travel around the world leaving and / or reading notes! (F
 ![Text letter](/images/readme/text.png)
 ![Photo letter](/images/readme/capture.png)
 ![Elk Rock](/images/readme/sample.png)
+
+# Technology 
+
+Mongo, Express, React, Node, AWS S3 (for image hosting), Google Maps Javascript API
