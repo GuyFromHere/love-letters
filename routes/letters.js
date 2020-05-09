@@ -79,7 +79,7 @@ router.get("/get", (req, res) => {
 });
 
 // @route   GET /api/letters/search
-// @desc    
+// @desc    Search the specified location using Places server API
 // @access  Public
 router.get("/search/:place", (req, res) => {
 	axios.get(uriStart + placesArgs + req.params.place + uriKeyPrefix + MAPS_SERVER).then(result => {
