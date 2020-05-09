@@ -15,9 +15,9 @@ Click the icons to see or read notes left by others.
 
 Use the search bar to travel around the world leaving and / or reading notes! (Feature Under Construction!)
 
-![Text letter](/images/readme/text.png)
-![Photo letter](/images/readme/capture.png)
-![Elk Rock](/images/readme/sample.png)
+![Text letter](/client/src/images/readme/text.png)
+![Photo letter](/client/src/images/readme/capture.png)
+![Elk Rock](/client/src/images/readme/sample.png)
 
 # Technology 
 
