@@ -7,7 +7,7 @@
 		"aws-sdk": "^2.664.0",
 		"axios": "^0.19.2",
 		"config": "^3.3.1",
-		"express": "^4.17.1",
+		"express": "^4.17.3",
 		"if-env": "^1.0.4",
 		"mongoose": "^5.9.10",
 		"concurrently": "^5.2.0",
